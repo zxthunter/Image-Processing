@@ -20,6 +20,7 @@ int main(){
 			src_pic[i*cols + j] = src.ptr<uchar>(i)[j];
 		}
 	}
+	// laplace 掩模计算
 	int min = 2500,max = -2500;
 	for (int i = 0; i < n; i++){
 			lap_pic[i] = 0;
@@ -32,6 +33,7 @@ int main(){
 			max = lap_pic[i] > max ? lap_pic[i] : max;
 			min = lap_pic[i] < min ? lap_pic[i] : min;
 	}
+	// 对laplace变换进行标定
 	for (int i = 0; i < n; i++){
 		scale_pic[i] = (uchar)(255 * (lap_pic[i] - min) / (max - min));
 	}
@@ -46,6 +48,7 @@ int main(){
 			p[j] = scale_pic[l];
 		}
 	}
+	// 将 laplace 掩模加载到新的图像上
 	for (int i = 0; i < n; i++){
 		res_pic[i] = src_pic[i] - lap_pic[i];
 		if (res_pic[i]<0)
